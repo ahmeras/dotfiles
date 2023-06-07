@@ -1,0 +1,337 @@
+
+set $mod Mod1
+set $wmod Mod4
+exec_always --no-startup-id dunst
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:"JetBrains Mono Nerd Font" 8
+
+default_border normal
+# Configure border style <normal|1pixel|pixel xx|none|pixel>
+new_window normal 
+new_float normal
+
+
+
+# change borders
+bindsym $wmod+u border none
+bindsym $wmod+y border pixel 1
+bindsym $wmod+n border normal
+
+
+
+
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+exec_always feh --bg-scale ~/op.png
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec alacritty
+# kill focused window
+bindsym $mod+q kill
+bindsym --whole-window $mod+button2 killfor_window [class="alacritty" instance="ALAC"] floating enable 
+
+# start dmenu (a program launcher)
+bindsym $wmod+d exec dmenu_run
+# start program launcher
+#bindsym $mod+d exec --no-startup-id dmenu_recency
+bindsym $mod+d exec --no-startup-id rofi -show run
+bindsym $wmod+w exec --no-startup-id rofi -show window
+bindsym $wmod+s exec --no-startup-id rofi -show ssh
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+bindsym $mod+F3 exec pcmanfm
+
+### float kate
+for_window [class="kate"] floating enable 
+### google chrome
+bindsym $mod+F2 exec --no-startup-id firefox
+bindsym $mod+w exec --no-startup-id firefox
+
+### mate terminal for randomness
+bindsym $mod+F1 exec alacritty --class ALAC
+#--title="URxvt-f"
+
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+# split orientation
+bindsym $mod+p split h;exec notify-send 'tile horizontally'
+bindsym $mod+o split v;exec notify-send 'tile vertically'
+bindsym $wmod+o layout splitv;exec notify-send 'layout vertically'
+bindsym $wmod+p layout splith;exec notify-send 'layout horiz'
+#bindsym $mod+w split toggle
+
+# ghetto swap
+bindsym $mod+j mark swap
+bindsym $mod+k swap container with mark swap; unmark swap
+bindsym $mod+r exec /home/rasal.ahmed@mavensecurities.com/git-repos/dotfiles/i3/swap.sh swap
+bindsym $mod+z exec /home/rasal.ahmed@mavensecurities.com/git-repos/dotfiles/i3/swap.sh paws
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+# flameshot gui
+bindsym $wmod+f exec flameshot gui
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# resize window (you can also use the mouse for that)
+### resize without mode with win key
+bindsym $wmod+Left resize shrink width 5 px or 5 ppt
+bindsym $wmod+Up resize grow height 5 px or 5 ppt
+bindsym $wmod+Down resize shrink height 5 px or 5 ppt
+bindsym $wmod+Right resize grow width 5 px or 5 ppt
+
+
+
+
+# marks
+bindsym $mod+m exec i3-input -F 'mark %s' -P 'Mark: '
+bindsym $mod+n exec i3-msg -t get_marks | jq -r '.[]' | rofi -dmenu -p 'Go to Mark' |  xargs -I{} i3-msg '[con_mark="{}"] focus'
+
+#bindsym $mod+k exec --no-startup-ip i3-input -F 'rename workspace to "%s"' -P 'New name: '
+
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+	#font pango:"Times new roman" 8
+        font pango:"DejaVu Sans Mono for Powerline" 8
+        position top
+        strip_workspace_numbers yes
+        # status_command i3status --config /home/rasal.ahmed@mavensecurities.com/.config/i3status/config
+        status_command /home/rasal.ahmed@mavensecurities.com/git-repos/bumblebee-status/bumblebee-status -t iceberg-rainbow -m cpu memory datetime
+}
+
+#Open specific applications in floating mode
+for_window [title="alsamixer"] floating enable border pixel 1
+for_window [class="calamares"] floating enable border normal
+for_window [class="Clipgrab"] floating enable
+for_window [title="File Transfer*"] floating enable
+for_window [class="Galculator"] floating enable border pixel 1
+for_window [class="GParted"] floating enable border normal
+for_window [title="i3_help"] floating enable sticky enable border normal
+for_window [class="Lightdm-settings"] floating enable
+for_window [class="Lxappearance"] floating enable sticky enable border normal
+for_window [class="Manjaro-hello"] floating enable
+for_window [class="Manjaro Settings Manager"] floating enable border normal
+for_window [title="MuseScore: Play Panel"] floating enable
+for_window [class="Nitrogen"] floating enable sticky enable border normal
+for_window [class="Oblogout"] fullscreen enable
+for_window [class="octopi"] floating enable
+for_window [title="About Pale Moon"] floating enable
+for_window [class="Pamac-manager"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="qt5ct"] floating enable sticky enable border normal
+for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
+for_window [class="Simple-scan"] floating enable border normal
+for_window [class="(?i)System-config-printer.py"] floating enable border normal
+for_window [class="Skype"] floating enable border normal
+for_window [class="Timeset-gui"] floating enable border normal
+for_window [class="(?i)virtualbox"] floating enable border normal
+for_window [class="Xfburn"] floating enable
+# misc window roles
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_type="About"] floating enable
+for_window [title="Terminator Preferences"] floating enable
+for_window [class="XFontSel"] floating enable
+for_window [class="Wireshark"] floating enable
+for_window [class="Caja"] floating enable
+for_window [class="Galculator"] floating enable
+#for_window [class="Vmware-view"] floating enable
+#for_window [class="vmware-view"] floating enable
+
+for_window [class="alacritty" instance="ALAC"] floating enable 
+#for_window [title="Remmina Remote Desktop Client"] floating enable
+#for_window [class="org.remmina.Remmina"] floating enable
+
+
+
+
+
+### worksapce
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10:Windows"
+
+set $aws1 "11"
+set $aws2 "12"
+set $aws3 "13"
+set $aws4 "14"
+set $aws5 "15"
+set $aws6 "16"
+set $aws7 "17"
+set $aws8 "18"
+set $aws9 "19"
+set $aws10 "20"
+
+
+set $aws11 "21"
+set $aws12 "22"
+set $aws13 "23"
+set $aws14 "24"
+set $aws15 "25"
+set $aws16 "26"
+set $aws17 "27"
+set $aws18 "28"
+set $aws19 "29"
+set $aws20 "30"
+
+set $m1 "Virtual1"
+set $m2 "Virtual2"
+
+workspace $ws1 output $m1
+workspace $ws2 output $m1
+workspace $ws3 output $m1
+workspace $ws4 output $m1
+workspace $ws5 output $m1
+workspace $ws6 output $m1
+workspace $ws7 output $m1
+workspace $ws8 output $m1
+workspace $ws9 output $m1
+workspace $ws10 output $m1
+
+workspace $aws1 output $m2
+workspace $aws2 output $m2
+workspace $aws3 output $m2
+workspace $aws4 output $m2
+workspace $aws5 output $m2
+workspace $aws6 output $m2
+workspace $aws7 output $m2
+workspace $aws8 output $m2
+workspace $aws9 output $m2
+workspace $aws10 output $m2
+
+workspace $aws11 output $m1
+workspace $aws12 output $m1
+workspace $aws13 output $m1
+workspace $aws14 output $m1
+workspace $aws15 output $m1
+workspace $aws16 output $m1
+workspace $aws17 output $m1
+workspace $aws18 output $m1
+workspace $aws19 output $m1
+workspace $aws20 output $m1
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+
+bindsym $wmod+1 workspace number $aws1
+bindsym $wmod+2 workspace number $aws2
+bindsym $wmod+3 workspace number $aws3
+bindsym $wmod+4 workspace number $aws4
+bindsym $wmod+5 workspace number $aws5
+bindsym $wmod+6 workspace number $aws6
+bindsym $wmod+7 workspace number $aws7
+bindsym $wmod+8 workspace number $aws8
+bindsym $wmod+9 workspace number $aws9
+bindsym $wmod+0 workspace number $aws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+bindsym $wmod+Shift+1 move container to workspace number $aws1
+bindsym $wmod+Shift+2 move container to workspace number $aws2
+bindsym $wmod+Shift+3 move container to workspace number $aws3
+bindsym $wmod+Shift+4 move container to workspace number $aws4
+bindsym $wmod+Shift+5 move container to workspace number $aws5
+bindsym $wmod+Shift+6 move container to workspace number $aws6
+bindsym $wmod+Shift+7 move container to workspace number $aws7
+bindsym $wmod+Shift+8 move container to workspace number $aws8
+bindsym $wmod+Shift+9 move container to workspace number $aws9
+bindsym $wmod+Shift+0 move container to workspace number $aws10
+
+bindsym $mod+Ctrl+greater move workspace to output right
+bindsym $mod+Ctrl+less move workspace to output left
