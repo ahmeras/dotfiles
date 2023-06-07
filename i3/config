@@ -1,0 +1,583 @@
+# i3 config file (v4)
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+set $mod Mod1
+set $wmod Mod4
+
+
+# set default desktop layout (default is tiling)
+# workspace_layout tabbed <stacking|tabbed>
+
+# Configure border style <normal|1pixel|pixel xx|none|pixel>
+# new_window pixel 1 
+# new_float normal
+default_border pixel 1
+default_floating_border normal
+
+
+# Hide borders
+hide_edge_borders none
+
+# change borders
+bindsym $wmod+u border none
+bindsym $wmod+y border pixel 1
+bindsym $wmod+n border normal
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# font xft:URWGothic-Book 11
+font pango:monospace 8
+
+# Use Mouse+$mod to drag floating windows
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec terminal
+
+# kill focused window
+bindsym $mod+q kill
+
+# start program launcher
+#bindsym $mod+d exec --no-startup-id dmenu_recency
+bindsym $mod+d exec --no-startup-id rofi -show run
+bindsym $wmod+w exec --no-startup-id rofi -show window
+bindsym $wmod+s exec --no-startup-id rofi -show ssh
+
+# launch categorized menu
+bindsym $wmod+z exec --no-startup-id morc_menu
+
+################################################################################################
+## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
+################################################################################################
+
+exec --no-startup-id volumeicon
+bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+#exec --no-startup-id pulseaudio
+#exec --no-startup-id pa-applet
+#bindsym $mod+Ctrl+m exec pavucontrol
+
+################################################################################################
+
+# Screen brightness controls
+# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
+# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+
+# Start Applications
+bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
+bindsym $mod+F3 exec pcmanfm
+bindsym $mod+F4 exec terminal -e 'ranger'
+# bindsym $mod+F3 exec ranger
+bindsym $mod+Shift+F3 exec gksu pcmanfm
+bindsym $mod+F5 exec terminal -e 'mocp'
+#bindsym $mod+t exec --no-startup-id pkill compton
+bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym Print exec --no-startup-id i3-scrot
+bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
+#bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
+bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+bindsym $mod+F12 exec deepin-terminal
+
+### float kate
+for_window [class="kate"] floating enable 
+for_window [class="Lutris"] floating enable 
+for_window [class="Viewnior"] floating enable 
+### google chrome
+bindsym $mod+F2 exec --no-startup-id firefox
+bindsym $mod+w exec --no-startup-id firefox
+
+## floating chrome
+#bindsym $mod+F3 exec google-chrome -- 
+#for_window [window_role="floating-chrome"] floating enable 
+
+### mate terminal for randomness
+bindsym $mod+F1 exec urxvt -name URxvtf
+#--title="URxvt-f"
+for_window [class="URxvt" instance="URxvtf"] floating enable 
+for_window [class="ksysguard"] floating enable 
+# for_window [class="URxvt"] floating enable 
+
+# focus_follows_mouse no
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+# split orientation
+bindsym $mod+p split h;exec notify-send 'tile horizontally'
+bindsym $mod+o split v;exec notify-send 'tile vertically'
+bindsym $wmod+o layout splitv;exec notify-send 'layout vertically'
+bindsym $wmod+p layout splith;exec notify-send 'layout horiz'
+#bindsym $mod+w split toggle
+
+# ghetto swap
+bindsym $mod+j mark swap
+bindsym $mod+k swap container with mark swap; unmark swap
+bindsym $mod+r exec /home/rasal/.config/i3/swap.sh swap
+bindsym $mod+z exec /home/rasal/.config/i3/swap.sh paws
+
+# toggle fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# toggle sticky
+bindsym $mod+Shift+s sticky toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+#navigate workspaces next / previous
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+
+bindsym $wmod+f exec flameshot gui
+
+# Workspace names
+# to display names or symbols instead of plain workspace numbers you can use
+# something like: set $ws1 1:mail
+#                 set $ws2 2:
+
+set $left_mon HDMI-A-1
+set $right_mon DisplayPort-1
+
+set $ws1 1:1
+set $ws2 2:2
+set $ws3 3:3
+set $ws4 4:4
+set $ws5 5:5
+set $ws6 6:6
+set $ws7 7:7
+set $ws8 8:8
+set $ws9 9:9
+set $ws0 10:Main
+
+set $ws21 21:1
+set $ws22 22:2
+set $ws23 23:3
+set $ws24 24:4
+set $ws25 25:5
+set $ws26 26:6
+set $ws27 27:7
+set $ws28 28:8
+set $ws29 29:9
+
+set $wsGames 11:Games
+set $wsDump 12:Dump
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws0
+
+
+bindsym $wmod+1 workspace $ws21
+bindsym $wmod+2 workspace $ws22
+bindsym $wmod+3 workspace $ws23
+bindsym $wmod+4 workspace $ws24
+bindsym $wmod+5 workspace $ws25
+bindsym $wmod+6 workspace $ws26
+bindsym $wmod+7 workspace $ws27
+bindsym $wmod+8 workspace $ws28
+bindsym $wmod+9 workspace $ws29
+
+bindsym $wmod+g workspace $wsGames
+bindsym $wmod+d workspace $wsDump
+
+
+# Move focused container to workspace
+bindsym $mod+Ctrl+1 move container to workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+bindsym $mod+Ctrl+9 move container to workspace $ws9
+bindsym $mod+Ctrl+0 move container to workspace $ws0
+
+
+bindsym $wmod+Ctrl+1 move container to workspace $ws21
+bindsym $wmod+Ctrl+2 move container to workspace $ws22
+bindsym $wmod+Ctrl+3 move container to workspace $ws23
+bindsym $wmod+Ctrl+4 move container to workspace $ws24
+bindsym $wmod+Ctrl+5 move container to workspace $ws25
+bindsym $wmod+Ctrl+6 move container to workspace $ws26
+bindsym $wmod+Ctrl+7 move container to workspace $ws27
+bindsym $wmod+Ctrl+8 move container to workspace $ws28
+bindsym $wmod+Ctrl+9 move container to workspace $ws29
+
+bindsym $wmod+Ctrl+g move container to workspace $wsGames
+bindsym $wmod+Ctrl+d move container to workspace $wsDump
+
+
+# Move to workspace with focused container
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws0; workspace $ws0
+
+bindsym $wmod+Shift+1 move container to workspace $ws21; workspace $ws21
+bindsym $wmod+Shift+2 move container to workspace $ws22; workspace $ws22
+bindsym $wmod+Shift+3 move container to workspace $ws23; workspace $ws23
+bindsym $wmod+Shift+4 move container to workspace $ws24; workspace $ws24
+bindsym $wmod+Shift+5 move container to workspace $ws25; workspace $ws25
+bindsym $wmod+Shift+6 move container to workspace $ws26; workspace $ws26
+bindsym $wmod+Shift+7 move container to workspace $ws27; workspace $ws27
+bindsym $wmod+Shift+8 move container to workspace $ws28; workspace $ws28
+bindsym $wmod+Shift+9 move container to workspace $ws29; workspace $ws29
+
+bindsym $wmod+Shift+g move container to workspace $wsGames; workspace $wsGames
+bindsym $wmod+Shift+d move container to workspace $wsDump; workspace $wsDump
+
+#set workspace windows
+workspace $ws1 output $right_mon
+workspace $ws2 output $right_mon
+workspace $ws3 output $right_mon
+workspace $ws4 output $right_mon
+workspace $ws5 output $right_mon
+workspace $ws6 output $right_mon
+workspace $ws7 output $right_mon
+workspace $ws8 output $right_mon
+workspace $ws9 output $right_mon
+workspace $ws10 output $right_mon
+
+workspace $wsGames output $right_mon
+
+workspace $ws21 output $left_mon
+workspace $ws22 output $left_mon
+workspace $ws23 output $left_mon
+workspace $ws24 output $left_mon
+workspace $ws25 output $left_mon
+workspace $ws26 output $left_mon
+workspace $ws27 output $left_mon
+workspace $ws28 output $left_mon
+workspace $ws29 output $right_mon
+
+workspace $wsDump output $left_mon
+
+# Open applications on specific workspaces
+# assign [class="Thunderbird"] $ws1
+# assign [class="Pale moon"] $ws2
+# assign [class="Pcmanfm"] $ws3
+# assign [class="Skype"] $ws5
+assign [class="battle.net.exe"] $wsDump
+assign [class="wowclassic.exe"] $wsGames
+assign [class="WoWClassic.exe"] $wsGames
+
+
+# Open specific applications in floating mode
+for_window [title="alsamixer"] floating enable border pixel 1
+for_window [class="calamares"] floating enable border normal
+for_window [class="Clipgrab"] floating enable
+for_window [title="File Transfer*"] floating enable
+for_window [class="Galculator"] floating enable border pixel 1
+for_window [class="GParted"] floating enable border normal
+for_window [title="i3_help"] floating enable sticky enable border normal
+for_window [class="Lightdm-settings"] floating enable
+for_window [class="Lxappearance"] floating enable sticky enable border normal
+for_window [class="Manjaro-hello"] floating enable
+for_window [class="Manjaro Settings Manager"] floating enable border normal
+for_window [title="MuseScore: Play Panel"] floating enable
+for_window [class="Nitrogen"] floating enable sticky enable border normal
+for_window [class="Oblogout"] fullscreen enable
+for_window [class="octopi"] floating enable
+for_window [title="About Pale Moon"] floating enable
+for_window [class="Pamac-manager"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="qt5ct"] floating enable sticky enable border normal
+for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
+for_window [class="Simple-scan"] floating enable border normal
+for_window [class="(?i)System-config-printer.py"] floating enable border normal
+for_window [class="Skype"] floating enable border normal
+for_window [class="Timeset-gui"] floating enable border normal
+for_window [class="(?i)virtualbox"] floating enable border normal
+for_window [class="Xfburn"] floating enable
+for_window [class="Nm-connection-editor"] floating enable
+# misc window roles
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_type="About"] floating enable
+for_window [title="Terminator Preferences"] floating enable
+for_window [class="XFontSel"] floating enable
+for_window [class="Wireshark"] floating enable
+for_window [class="Caja"] floating enable
+
+### jump to urgent
+bindsym $mod+x [urgent=latest] focus
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+
+bindsym $wmod+0 mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+### resize without mode with win key
+bindsym $wmod+Left resize shrink width 5 px or 5 ppt
+bindsym $wmod+Up resize grow height 5 px or 5 ppt
+bindsym $wmod+Down resize shrink height 5 px or 5 ppt
+bindsym $wmod+Right resize grow width 5 px or 5 ppt
+
+# marks
+show_marks yes
+bindsym $mod+n exec i3-input -F 'mark %s' -P 'Mark: '
+#bindsym $mod+m exec i3-input -F '[con_mark="%s"] focus' -P 'Goto: '
+bindsym $mod+m exec /home/rasal/.config/i3/marks.sh
+
+# move floaters
+mode "moveit" {
+    bindsym Up move up 10px
+    bindsym Left move left 10px
+    bindsym Down move down 10px
+    bindsym Right move right 10px
+    bindsym $wmod+m mode "default"
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+bindsym $wmod+m focus floating; mode "moveit"
+
+
+
+# turn off mouse following when changing workspace
+# mouse_warping none
+
+# back and forth switching with same num ws
+workspace_auto_back_and_forth yes
+
+# enable focus move when app is requesting focus - i.e. chrome
+focus_on_window_activation focus
+
+
+
+# Lock screen
+bindsym $wmod+l exec --no-startup-id blurlock
+
+# Autostart applications
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+#exec --no-startup-id xrandr --output DisplayPort-1 --primary
+#exec --no-startup-id xrandr --auto --output DisplayPort-1 --mode 2560x1440 --right-of HDMI-A-1
+exec --no-startup-id /home/rasal/.screenlayout/main.sh
+#exec --no-startup-id manjaro-hello
+exec --no-startup-id nm-applet
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id pamac-tray
+exec --no-startup-id clipit
+# exec --no-startup-id blueman-applet
+# exec_always --no-startup-id sbxkb
+exec --no-startup-id start_conky_maia
+# exec --no-startup-id start_conky_gree 
+#exec_always --no-startup-id conky -c /home/rasal/.config/conky/info
+exec --no-startup-id xautolock -time 30 -locker blurlock
+exec_always --no-startup-id ff-theme-util
+exec_always --no-startup-id fix_xcursor
+exec --no-startup-id flameshot
+exec_always --no-startup-id feh --bg-scale /home/rasal/Pictures/wallpaper/1.jpg
+exec --no-startup-id ckb-next-daemon
+exec --no-startup-id bluetoothctl power on
+
+
+# Color palette used for the terminal ( ~/.Xresources file )
+# Colors are gathered based on the documentation:
+# https://i3wm.org/docs/userguide.html#xresources
+# Change the variable name at the place you want to match the color
+# of your terminal like this:
+# [example]
+# If you want your bar to have the same background color as your 
+# terminal background change the line 362 from:
+# background #14191D
+# to:
+# background $term_background
+# Same logic applied to everything else.
+set_from_resource $term_background background
+set_from_resource $term_foreground foreground
+set_from_resource $term_color0     color0
+set_from_resource $term_color1     color1
+set_from_resource $term_color2     color2
+set_from_resource $term_color3     color3
+set_from_resource $term_color4     color4
+set_from_resource $term_color5     color5
+set_from_resource $term_color6     color6
+set_from_resource $term_color7     color7
+set_from_resource $term_color8     color8
+set_from_resource $term_color9     color9
+set_from_resource $term_color10    color10
+set_from_resource $term_color11    color11
+set_from_resource $term_color12    color12
+set_from_resource $term_color13    color13
+set_from_resource $term_color14    color14
+set_from_resource $term_color15    color15
+
+# Start i3bar to display a workspace bar (plus the system information i3status if available)
+bar {
+	i3bar_command i3bar
+	status_command bumblebee-status -m spotify hostname cpu memory  time -p time.format="%d-%m-%y %H:%M" -t default
+	#status_command i3status --config ~/.i3status.conf
+	position top
+
+
+## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+	#tray_output primary
+	tray_output HDMI-A-1 
+	#tray_output HDMI-A-0 
+
+	bindsym button4 nop
+	bindsym button5 nop
+#   font xft:URWGothic-Book 11
+	strip_workspace_numbers yes
+
+    colors {
+        background #222D31
+        statusline #F9FAF9
+        separator  #454947
+
+#                           border      backgr.         text
+        focused_workspace  #F9FAF9      #16a085         #292F34
+        #active_workspace   #595B5B     #353836         #FDF6E3
+        active_workspace   #595B5B      $term_color1    #FDF6E3
+        inactive_workspace #595B5B      #222D31         #EEE8D5
+        binding_mode       #16a085      #2C2C2C         #F9FAF9
+        urgent_workspace   #16a085      #FDF6E3         #E5201D
+    }
+}
+
+# hide/unhide i3status bar
+#bindsym $mod+m bar mode toggle
+
+# Theme colors
+# class                   border  backgr. text    indic.   child_border
+  #client.focused         #556064 #556064 #80FFF9 #FDF6E3
+  #client.focused         #468549 #468549 #80FFF9 #468549
+  client.focused          #c5c8c6 #c5c8c6 #80FFF9 #c5c8c6
+  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+  client.placeholder      #000000 #0c0c0c #ffffff #000000
+### settings for i3-gaps: ###
+#############################
+
+# Set inner/outer gaps
+gaps inner 5 
+gaps outer 10 
+
+# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
+# gaps inner|outer current|all set|plus|minus <px>
+# gaps inner all set 10
+# gaps outer all plus 5
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+# smart_gaps on
+
+# Smart borders (draw borders around container only if it is not the only container on this workspace) 
+# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
+smart_borders on
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
