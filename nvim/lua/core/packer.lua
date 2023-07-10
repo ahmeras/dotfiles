@@ -18,6 +18,8 @@ return require('packer').startup(function(use)
         {run = ':TSUpdate'}
     }
 
+    use {'nvim-lua/plenary.nvim'}  -- basic dependency
+    use {'j-morano/buffer_manager.nvim'}
     use {
         "catppuccin/nvim",
         as = "catppuccin",
@@ -45,6 +47,9 @@ return require('packer').startup(function(use)
     use {
         'gennaro-tedesco/nvim-peekup'
     }
+    use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+        require("toggleterm").setup()
+    end}
     use {
       "folke/which-key.nvim",
       config = function()

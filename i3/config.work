@@ -40,6 +40,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec alacritty
+# bindsym $mod+Return exec wezterm
 # kill focused window
 bindsym $mod+q kill
 bindsym --whole-window $mod+button2 killfor_window [class="alacritty" instance="ALAC"] floating enable 

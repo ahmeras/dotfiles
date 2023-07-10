@@ -217,15 +217,6 @@
 # NOTE: It might be helpful to run dunst -print in a terminal in order
 # to find fitting options for rules.
 
-[teams_tse]
-    #appname = Teams
-    summary = "*TSE-Team*"
-    urgency = critical
-
-[teams_test]
-    #appname = Teams
-    summary = "*Central*Communcations*TSE*"
-    urgency = critical
 
 
 #[espeak]
@@ -346,3 +337,21 @@
     body="*eusupp*"
     background="#470A0A"
     timeout=90
+
+[teams]
+    appname=Microsoft Teams - Preview
+    summary="*TSE*"
+    timeout=18000
+    background="#8c0a22"
+
+[teamstest2]
+    appname=notify-send
+    summary="*Exe UI*"
+    timeout=18000
+    background="#8c0a22"
+
+[teams2]
+    appname=Microsoft Teams - Preview
+    body="*TSE*"
+    timeout=18000
+    background="#8c0a22"

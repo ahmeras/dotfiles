@@ -15,6 +15,9 @@ vim.keymap.set("n", "tj", "<Cmd>tabnext<CR>")
 vim.keymap.set("n", "td", "<Cmd>tabclose<CR>")
 
 vim.keymap.set("n", "<leader>gg", "<Cmd>Git<CR><Cmd>resize 10<CR>")
+vim.keymap.set("n", "<leader>gp", "<Cmd>Git pull<CR>")
+vim.keymap.set("n", "<leader>gm", "<Cmd>Git checkout master<CR>")
+vim.keymap.set("n", "<leader>gc", ":Git checkout ")
 -- vim.keymap.set("n",
 vim.keymap.set("n","j","gj")
 vim.keymap.set("n","k","gk")
@@ -30,6 +33,7 @@ o.hlsearch = true
 o.mouse = "a"
 
 o.laststatus = 3
+vim.o.laststatus = 3
 -- line numbers
 o.number = true
 o.ruler = false
@@ -37,7 +41,7 @@ o.ruler = false
 o.title = true
 o.list = true
 o.listchars = { tab = '▸ ', trail = '·' }
-
+o.laststatus = 3
 -- movement
 vim.keymap.set("n","<C-j>", "<C-W>j")
 vim.keymap.set("n","<C-k>", "<C-W>k")
