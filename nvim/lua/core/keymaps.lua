@@ -14,10 +14,6 @@ vim.keymap.set("n", "tk", "<Cmd>tabprev<CR>")
 vim.keymap.set("n", "tj", "<Cmd>tabnext<CR>")
 vim.keymap.set("n", "td", "<Cmd>tabclose<CR>")
 
-vim.keymap.set("n", "<leader>gg", "<Cmd>Git<CR><Cmd>resize 10<CR>")
-vim.keymap.set("n", "<leader>gp", "<Cmd>Git pull<CR>")
-vim.keymap.set("n", "<leader>gm", "<Cmd>Git checkout master<CR>")
-vim.keymap.set("n", "<leader>gc", ":Git checkout ")
 -- vim.keymap.set("n",
 vim.keymap.set("n","j","gj")
 vim.keymap.set("n","k","gk")

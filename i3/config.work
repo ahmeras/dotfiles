@@ -159,7 +159,7 @@ bar {
         position top
         strip_workspace_numbers yes
         # status_command i3status --config /home/rasal.ahmed@mavensecurities.com/.config/i3status/config
-        status_command /home/rasal.ahmed@mavensecurities.com/git-repos/bumblebee-status/bumblebee-status -t iceberg-rainbow -m cpu memory datetime
+        status_command /home/rasal.ahmed@mavensecurities.com/git-repos/bumblebee-status/bumblebee-status -t iceberg -m load spacer cpu spacer memory spacer datetime -p spacer.text="      "
 }
 
 #Open specific applications in floating mode

@@ -1,6 +1,6 @@
 
 function Colour(color)
-    c = color or "catppuccin-macchiato"
+    c = color or "onedark"
     vim.cmd.colorscheme(c)
 end
 

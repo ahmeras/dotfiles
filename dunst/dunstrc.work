@@ -355,3 +355,9 @@
     body="*TSE*"
     timeout=18000
     background="#8c0a22"
+
+[shep]
+    appname=notify-send
+    summary="*Alert*"
+    timeout=18000
+    background="#0a548c"

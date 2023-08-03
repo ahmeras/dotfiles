@@ -6,7 +6,10 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
-
+    use {
+        'uloco/bluloco.nvim',
+        requires = { 'rktjmp/lush.nvim' }
+    }
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.1',
         -- or                            , branch = '0.1.x',
@@ -18,13 +21,17 @@ return require('packer').startup(function(use)
         {run = ':TSUpdate'}
     }
 
-    use {'nvim-lua/plenary.nvim'}  -- basic dependency
     use {'j-morano/buffer_manager.nvim'}
     use {
         "catppuccin/nvim",
         as = "catppuccin",
     }
-
+    use {"rebelot/kanagawa.nvim"}
+    use {'navarasu/onedark.nvim'}
+    use {'marko-cerovac/material.nvim'}
+    use {"folke/tokyonight.nvim"}
+    use {"EdenEast/nightfox.nvim"}
+    use {"shaunsingh/nord.nvim"}
     use {
         'nvim-treesitter/playground'
     }
@@ -44,9 +51,9 @@ return require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
-    use {
-        'gennaro-tedesco/nvim-peekup'
-    }
+  use {
+       'gennaro-tedesco/nvim-peekup'
+   }
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
     end}
