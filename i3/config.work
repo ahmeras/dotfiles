@@ -28,6 +28,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 exec_always feh --bg-scale ~/op.png
+bindsym $wmod+i exec --no-startup-id feh --bg-scale ~/op.png
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -106,7 +107,9 @@ bindsym $mod+k swap container with mark swap; unmark swap
 bindsym $mod+r exec /home/rasal.ahmed@mavensecurities.com/git-repos/dotfiles/i3/swap.sh swap
 bindsym $mod+z exec /home/rasal.ahmed@mavensecurities.com/git-repos/dotfiles/i3/swap.sh paws
 
-# enter fullscreen mode for the focused container
+#rename window
+bindsym $wmod+r exec /home/rasal.ahmed@mavensecurities.com/git-repos/dotfiles/i3/rename.sh
+# enter fullscreen mode for the focused container.
 bindsym $mod+f fullscreen toggle
 # flameshot gui
 bindsym $wmod+f exec flameshot gui
@@ -160,12 +163,15 @@ bar {
         strip_workspace_numbers yes
         # status_command i3status --config /home/rasal.ahmed@mavensecurities.com/.config/i3status/config
         status_command /home/rasal.ahmed@mavensecurities.com/git-repos/bumblebee-status/bumblebee-status -t iceberg -m load spacer cpu spacer memory spacer datetime -p spacer.text="      "
-}
-
-#Open specific applications in floating mode
-for_window [title="alsamixer"] floating enable border pixel 1
-for_window [class="calamares"] floating enable border normal
-for_window [class="Clipgrab"] floating enable
+colors {
+    active_workspace #333333 #333333 #ffffff
+    background #222222
+    focused_workspace #0088CC #0088CC #ffffff
+    inactive_workspace #333333 #333333 #888888
+    separator #666666
+    statusline #dddddd
+    urgent_workspace #2f343a #900000 #ffffff
+}}
 for_window [title="File Transfer*"] floating enable
 for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="GParted"] floating enable border normal
@@ -224,8 +230,8 @@ set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
+set $ws8 "8:Remmina"
+set $ws9 "9:Monitoring"
 set $ws10 "10:Windows"
 
 set $aws1 "11"
@@ -266,15 +272,15 @@ workspace $ws9 output $m1
 workspace $ws10 output $m1
 
 workspace $aws1 output $m2
-workspace $aws2 output $m2
-workspace $aws3 output $m2
-workspace $aws4 output $m2
-workspace $aws5 output $m2
-workspace $aws6 output $m2
-workspace $aws7 output $m2
-workspace $aws8 output $m2
-workspace $aws9 output $m2
-workspace $aws10 output $m2
+#workspace $aws2 output $m2
+#workspace $aws3 output $m2
+#workspace $aws4 output $m2
+#workspace $aws5 output $m2
+#workspace $aws6 output $m2
+#workspace $aws7 output $m2
+#workspace $aws8 output $m2
+#workspace $aws9 output $m2
+#workspace $aws10 output $m2
 
 workspace $aws11 output $m1
 workspace $aws12 output $m1
@@ -336,3 +342,7 @@ bindsym $wmod+Shift+0 move container to workspace number $aws10
 
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
+client.focused #0088CC #0088CC #ffffff #dddddd #0088CC
+client.focused_inactive #333333 #333333 #888888 #292d2e #333333
+client.unfocused #333333 #333333 #888888 #292d2e #333333
+client.urgent #2f343a #900000 #ffffff #900000 #2f343a

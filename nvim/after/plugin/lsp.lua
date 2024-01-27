@@ -1,10 +1,23 @@
- local lsp = require('lsp-zero').preset({'pyright'})
+ local lsp = require('lsp-zero').preset({'pyright', 'bash-language-server'})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
 end)
 
+-- require'lspconfig'.pyright.setup{}
+require("lspconfig").pyright.setup({
+  capabilities = capabilities,
+  handlers = {
+    ["textDocument/publishDiagnostics"] = function() end,
+  },
+})
 local cmp = require('cmp')
+
+cmp.setup({
+ sources = cmp.config.sources({
+      { name = 'nvim_lsp',keyword_length = 4 }
+    })
+})
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
@@ -50,5 +63,4 @@ lsp.set_preferences({
 
 -- (Optional) Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-
 lsp.setup()
